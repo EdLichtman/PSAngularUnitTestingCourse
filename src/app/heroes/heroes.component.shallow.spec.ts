@@ -1,13 +1,14 @@
-import { HeroesComponent } from "./heroes.component";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { HeroService } from "../hero.service";
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Input } from "@angular/core";
-import { of } from "rxjs/internal/observable/of";
-import { By } from "@angular/platform-browser";
+import { HeroesComponent } from './heroes.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HeroService } from '../hero.service';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, Input } from '@angular/core';
+import { of } from 'rxjs/internal/observable/of';
+import { By } from '@angular/platform-browser';
+import { isIsolated, unloadFixture } from '../../environments/environment.spec';
 
 @Component({
     selector: 'app-hero',
-    template: '<div></div>'
+    template: '<div>LIST ITEM: {{hero.id}}</div>'
 })
 class MockHeroComponent {
     @Input() hero;
@@ -33,9 +34,13 @@ describe(`${HeroesComponent.name} (shallow tests)`, () => {
                 MockHeroComponent /* Overly-Verbose way of creating a schema object for use */
             ],
             providers: [{provide: HeroService, useValue: mockHeroService}],
-            schemas: [ CUSTOM_ELEMENTS_SCHEMA ] /*THIS IS ANOTHER RIGHT WAY TO DO IT, NOT THE "NO_ELEMENTS_SCHEMA" WAY OF DOING IT */
+            schemas: [ CUSTOM_ELEMENTS_SCHEMA ] /*THIS IS ANOTHER RIGHT WAY TO DO IT, NOT THE 'NO_ELEMENTS_SCHEMA' WAY OF DOING IT */
         });
         fixture = TestBed.createComponent(HeroesComponent);
+
+        if (!isIsolated()) {
+            unloadFixture(fixture);
+        }
     });
 
     it(`should set heroes correctly from the service`, () => {

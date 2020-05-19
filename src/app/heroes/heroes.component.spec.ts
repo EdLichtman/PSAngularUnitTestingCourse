@@ -1,7 +1,7 @@
-import { HeroesComponent } from "./heroes.component";
-import { HeroService } from "../hero.service";
-import { Hero } from "../hero";
-import { of } from "rxjs";
+import { HeroesComponent } from './heroes.component';
+import { HeroService } from '../hero.service';
+import { Hero } from '../hero';
+import { of } from 'rxjs/internal/observable/of';
 
 describe(HeroesComponent.name, () => {
     let component: HeroesComponent;

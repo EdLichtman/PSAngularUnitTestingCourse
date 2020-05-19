@@ -2,6 +2,7 @@ import { HeroComponent } from './hero.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { isIsolated, unloadFixture } from '../../environments/environment.spec';
 
 describe(HeroComponent.name, () => {
     let fixture: ComponentFixture<HeroComponent>;
@@ -15,6 +16,10 @@ describe(HeroComponent.name, () => {
             ]
         });
         fixture = TestBed.createComponent(HeroComponent);
+
+        if (!isIsolated()) {
+            unloadFixture(fixture);
+        }
     });
 
     it(`should have the correct hero`, () => {
